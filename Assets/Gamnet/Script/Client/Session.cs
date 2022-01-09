@@ -178,6 +178,7 @@ namespace Gamnet.Client
 
         protected override void OnPause()
         {
+            socket.Close();
             OnPauseEvent?.Invoke();
         }
 
@@ -188,7 +189,24 @@ namespace Gamnet.Client
 
         protected override void OnClose()
         {
+            if (null == socket)
+            {
+                return;
+            }
+
+            if (false == socket.Connected)
+            {
+                return;
+            }
+
+            if (true == link_establish)
+            {
+                Send_DestroySessionLink_Ntf();
+            }
+
+            socket.Close();
             OnCloseEvent?.Invoke();
+            Clear();
         }
 
         protected override void OnError(Exception e)
@@ -199,8 +217,7 @@ namespace Gamnet.Client
 
         public void Pause()
         {
-            socket.Close();
-            OnPause();
+            EventLoop.EnqueuEvent(new ActionEvent(this, OnPause));
         }
 
         public void Resume()
@@ -219,23 +236,7 @@ namespace Gamnet.Client
 
         public override void Close()
         {
-            if (null == socket)
-            {
-                return;
-            }
-
-            if (false == socket.Connected)
-            {
-                return;
-            }
-
-            if (true == link_establish)
-            {
-                Send_DestroySessionLink_Ntf();
-            }
-            socket.Close();
-            OnClose();
-            Clear();
+            EventLoop.EnqueuEvent(new ActionEvent(this, OnClose));
         }
 
         public void Error(System.Exception e)

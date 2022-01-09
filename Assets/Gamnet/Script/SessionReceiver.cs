@@ -35,7 +35,7 @@ namespace Gamnet
                 catch (SocketException e)
                 {
                     Debug.Log(e.Message);
-                    session.Close();
+                    EventLoop.EnqueuEvent(new CloseEvent(session));
                 }
             }
 
@@ -90,7 +90,6 @@ namespace Gamnet
                 catch (ObjectDisposedException e)
                 {
                     Debug.Log(e.Message);
-                    //EventLoop.EnqueuEvent(new CloseEvent(session));
                     return;
                 }
                 catch (SocketException e)
