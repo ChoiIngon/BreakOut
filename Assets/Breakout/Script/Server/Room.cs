@@ -81,7 +81,10 @@ namespace Breakout.Server
 
             state = Room.State.Ready;
             InvokeRepeating("SyncWorld", 0, GameManager.Instance.syncInterval);
-            InvokeRepeating("SwitchPosition", 0, 5);
+            if (true == GameManager.Instance.multiPlay)
+            {
+                InvokeRepeating("SwitchPosition", 0, GameManager.Instance.switchInterval);
+            }
         }
 
         public void AddUser(Session session)

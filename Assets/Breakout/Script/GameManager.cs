@@ -13,6 +13,7 @@ namespace Breakout
         public bool useDeadReckoning;
         [Range(0, 1000)]
         public int packetDelay; //ms
+        [Range(5, 30)]
         public int switchInterval;
         [Range(0, 1.0f)]
         public float syncInterval;

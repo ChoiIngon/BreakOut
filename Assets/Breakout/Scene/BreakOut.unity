@@ -433,10 +433,10 @@ MonoBehaviour:
   ballSpeed: 15
   host: 127.0.0.1
   port: 4000
-  multiPlay: 1
+  multiPlay: 0
   useDeadReckoning: 0
   packetDelay: 0
-  switchInterval: 0
+  switchInterval: 5
   syncInterval: 0.5
 --- !u!4 &759619184
 Transform:
